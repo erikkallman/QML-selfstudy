@@ -4,8 +4,9 @@
 
 - `exercise_1.py`: the circuit exercise. You change one gate.
 - `exercise_2.py`: the training exercise. You change one line of the training loop.
-- `tutorials.py`: the full presentation. It has seven chapters: Start, Circuit,
-  Training, Models, Quantum memory, Structured generation, and Outlook.
+- `tutorials.py`: the tutorial, the full presentation. It has seven chapters:
+  Start, Circuit, Training, Models, Quantum memory, Structured generation, and
+  Outlook.
 - `exercise_circuits.py` and `exercise_layout.py`: the supplied code that the
   exercises import. `exercise_circuits.py` holds the circuits, the loss
   function, and the circuit drawing. `exercise_layout.py` holds the layout of
@@ -15,9 +16,10 @@
 - `research_generation.py` and `participant_package.py`: files that
   `tutorials.py` needs.
 - Keep all these files in the same folder.
-- `requirements.txt` and `verify_tutorials.py`: only for the fallback setup at
-  the end of this file.
-- `serve.py`: the presenter's script for the shared teaching app. You do not need it.
+- `serve.py`: starts the tutorial in your browser. See "Open the tutorial".
+- `requirements.txt`: the package list for the tutorial and for the fallback
+  setup at the end of this file.
+- `verify_tutorials.py`: only for the fallback setup.
 - `manifest.json`: a SHA-256 hash of every file, to check that everyone has the same version.
 
 ## How an exercise notebook works
@@ -77,6 +79,10 @@ packages, and the venue network is shared.
    When the exercise opens in your browser, your setup works.
    Stop it with Ctrl-C in the terminal.
 
+4. Start the tutorial once, as described in "Open the tutorial" below. This
+   installs its packages now, not on the venue network. When the page opens,
+   stop it with Ctrl-C.
+
 ## During the exercises
 
 Open the first exercise:
@@ -110,15 +116,23 @@ To start over, download the changed files again, or keep unedited copies
 before you begin. Keep each exercise file in this folder: it imports
 `exercise_circuits.py` and `exercise_layout.py`, and it uses `workshop.css`.
 
-## The full presentation
+## Open the tutorial
+
+Open a terminal in this folder and run:
 
 ```sh
-uvx marimo edit --sandbox tutorials.py
+uv run --no-project --python 3.12 --with-requirements requirements.txt serve.py
 ```
+
+Then open http://localhost:8796 in your browser. Keep the terminal open while
+you use the tutorial. Ctrl-C in the terminal stops it. If another program
+uses port 8796, add `--port 8797` to the command and open
+http://localhost:8797.
 
 Go through the chapters in order, starting with Start. Most chapters have two
 tabs: Tutorial, with the explanations and the code, and Lab, with the sliders,
-circuits, and plots.
+circuits, and plots. You can move the sliders, but you cannot edit the code on
+this page. To change code, use the exercises.
 
 ## If uv does not work for you
 
@@ -141,5 +155,5 @@ python -m pip install -r requirements.txt
 python verify_tutorials.py
 ```
 
-Then open each notebook with `python -m marimo edit exercise_1.py --no-sandbox`,
-and the same for `exercise_2.py` and `tutorials.py`.
+Then open each exercise with `python -m marimo edit exercise_1.py --no-sandbox`,
+and the same for `exercise_2.py`. Start the tutorial with `python serve.py`.
