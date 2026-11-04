@@ -1,0 +1,23 @@
+{
+  "exercises": [
+    "exercise_1.py",
+    "exercise_2.py"
+  ],
+  "format": 1,
+  "main_notebook": "tutorials.py",
+  "sha256": {
+    "PARTICIPANTS.md": "2df13875c347c438dbc9a79818be15e004702020d7977545c25ec5f8f4ffe2be",
+    "README.md": "2df13875c347c438dbc9a79818be15e004702020d7977545c25ec5f8f4ffe2be",
+    "exercise_1.py": "79f02d066f803353f246e1a2b8e904889bbfc1044afd72bba52aed55426fb297",
+    "exercise_2.py": "7564f53c6f94bf6b5ef2a970a9b88d96a85d0112bd8f24b93385d8202316984b",
+    "exercise_circuits.py": "9cdafa9a533957b8a35aca6703682e583fd409334f44903175d591cd23d13dfd",
+    "exercise_layout.py": "6f8190e6915b835a12a5b2862ed9ab8263bdb49d5804b0996acf69d59d172c2f",
+    "participant_package.py": "198cba4479bbe0d728a29bfc26c813a83d366d066c6039a312dfaef9b06e351e",
+    "requirements.txt": "f01f283816b3916c0d20a5426813b6f9d22ed9ffbb0687dca32347a7586bf2de",
+    "research_generation.py": "ebf0fde00492e530bf8c4b495d9b6deb82aaf2f2e80c84ed3ee933aac54209e7",
+    "serve.py": "25198eb61ee878ba0bde313a0d14eb777e0fc037085ace7d760cae699936e6df",
+    "tutorials.py": "355315735149f99a3bb21fc07d3bc8dea3228f0fb8182ee8385e5204afa51861",
+    "verify_tutorials.py": "fee73afe590d0f0a06de338bb6b3f94c3a82d83db28d57e607f708d8be0e7a1a",
+    "workshop.css": "439f3dab75b406f5ee4931550c7fea5d8d13c4395d2354d552792002f47d6a44"
+  }
+}

@@ -1,0 +1,157 @@
+.reveal-viewport { background: #fafafa; color: #171717; }
+.reveal .slides { text-align: left; }
+.reveal .slides h1 { font-size: 60px; letter-spacing: 0; }
+.reveal .slides h2 { font-size: 38px; letter-spacing: 0; margin-bottom: 18px; }
+.reveal .slides h3 { font-size: 28px; letter-spacing: 0; }
+.reveal .slides p, .reveal .slides li { font-size: 23px; line-height: 1.45; }
+.reveal .slides ul { margin: 0.4em 0; padding-left: 1.15em; }
+.reveal .slides li { margin: 0.15em 0; line-height: 1.35; }
+.reveal .slides table { font-size: 21px; }
+.reveal .slides a { color: #0f766e; }
+.reveal .slides code { font-size: 0.85em; }
+.markdown code, .reveal .slides code { font-weight: 400; }
+.reveal .slides img { max-height: 380px; object-fit: contain; }
+.reveal .slides section { padding: 18px; }
+
+.experiment-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  align-items: start;
+  gap: 28px;
+  width: 100%;
+}
+.experiment-inputs, .experiment-output { min-width: 0; }
+.experiment-inputs { padding-top: 12px; }
+.experiment-layout .experiment-output img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 340px;
+  object-fit: contain;
+}
+
+.tutorial-step {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 36px;
+  align-items: start;
+  width: 100%;
+  border-top: 1px solid #d4d4d4;
+  padding: 28px 0;
+}
+.tutorial-explanation, .tutorial-code { min-width: 0; }
+
+.notes-figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: 36px;
+  align-items: start;
+  width: 100%;
+}
+.notes-figure > * { min-width: 0; }
+.notes-figure-picture img {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin: 0 auto;
+}
+.figure-caption {
+  max-width: 440px;
+  margin: 4px auto 32px;
+  color: #404040;
+}
+.figure-caption .paragraph, .figure-caption p { font-size: 15px; line-height: 1.5; }
+.chapter-notes .paragraph, .chapter-notes li { font-size: 20px; line-height: 1.55; }
+.chapter-notes h3 { font-size: 25px; line-height: 1.3; letter-spacing: 0; }
+.chapter-notes h4 { font-size: 20px; line-height: 1.35; letter-spacing: 0; margin: 1.4em 0 0.4em; }
+.chapter-notes table { width: 100%; table-layout: fixed; font-size: 18px; }
+.chapter-notes th, .chapter-notes td { padding: 8px; overflow-wrap: anywhere; }
+.chapter-notes marimo-tex { display: inline-block !important; max-width: 100%; overflow-x: auto; vertical-align: middle; }
+.tutorial-explanation h3 { font-size: 25px; letter-spacing: 0; line-height: 1.3; }
+.tutorial-explanation p, .tutorial-explanation .paragraph, .tutorial-explanation li { font-size: 18px; line-height: 1.6; }
+.tutorial-explanation li { margin: 8px 0; }
+.tutorial-code pre { margin: 0; font-size: 13px; line-height: 1.5; overflow-x: auto; }
+.tutorial-code code, .tutorial-code code span { font-weight: 400 !important; }
+.tutorial-explanation marimo-tex {
+  display: inline-block !important;
+  max-width: 100%;
+  overflow-x: auto;
+  vertical-align: middle;
+}
+
+.audience-question {
+  width: 100%;
+  margin: 8px 0;
+  border-top: 1px solid #d4d4d4;
+  color: #171717;
+}
+.audience-question > summary {
+  padding: 14px 4px;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.audience-question > summary::marker { color: #0f766e; }
+.audience-question > summary:hover { color: #0f766e; }
+.audience-question > summary:focus-visible { outline: 2px solid #0f766e; outline-offset: 3px; }
+.audience-question > summary .markdown { font-size: inherit; line-height: inherit; }
+.audience-question > summary .paragraph { display: inline; font-size: inherit; line-height: inherit; }
+.audience-answer { padding: 0 28px 16px; }
+.audience-answer .paragraph, .audience-answer p { font-size: 20px; line-height: 1.55; }
+.slide-question { margin: 4px 0; }
+.slide-question > summary { padding: 8px 4px; min-height: 44px; box-sizing: border-box; }
+.audience-question marimo-tex {
+  display: inline-block !important;
+  max-width: 100%;
+  overflow-x: auto;
+  vertical-align: middle;
+}
+
+@media (max-width: 850px) {
+  .tutorial-step { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 24px 0; }
+  .notes-figure { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .tutorial-explanation p, .tutorial-explanation .paragraph, .tutorial-explanation li { font-size: 17px; }
+}
+
+@media (max-width: 700px) {
+  .chapter-notes .paragraph, .chapter-notes li { font-size: 18px; }
+  .chapter-notes table { font-size: 16px; }
+  .audience-question > summary { font-size: 19px; }
+  .audience-answer { padding: 0 12px 16px; }
+  .audience-answer .paragraph, .audience-answer p { font-size: 18px; }
+  .experiment-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .experiment-inputs { padding-top: 0; }
+  .group.relative:has(> .reveal) {
+    width: 100% !important;
+    height: calc(100dvh - 48px) !important;
+  }
+  .reveal {
+    aspect-ratio: auto;
+    height: 100% !important;
+  }
+  .reveal .slides {
+    width: 100% !important;
+    height: 100% !important;
+    inset: 0 !important;
+    transform: none !important;
+  }
+  .reveal .slides section { height: 100%; padding: 12px; }
+  .reveal .mo-slide-content {
+    margin: 0 !important;
+    min-width: 0;
+    max-width: 100%;
+    padding-bottom: 60px;
+  }
+  .reveal .slides table { width: 100%; table-layout: fixed; }
+  .reveal .slides th, .reveal .slides td { overflow-wrap: anywhere; }
+  .reveal .slides code { overflow-wrap: anywhere; }
+  .reveal .slides marimo-tex {
+    display: inline-block !important;
+    max-width: 100%;
+    overflow-x: auto;
+    vertical-align: middle;
+  }
+}
