@@ -143,10 +143,3 @@ python verify_tutorials.py
 
 Then open each notebook with `python -m marimo edit exercise_1.py --no-sandbox`,
 and the same for `exercise_2.py` and `tutorials.py`.
-
-## About the code
-
-All circuits run in a simulator on your own computer. No quantum hardware is
-involved. The two research chapters, Quantum memory and Structured generation,
-use small versions of the published studies. Each chapter states what it keeps
-from its study and what it leaves out.
