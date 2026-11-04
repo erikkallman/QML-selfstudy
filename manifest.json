@@ -6,8 +6,8 @@
   "format": 1,
   "main_notebook": "tutorials.py",
   "sha256": {
-    "PARTICIPANTS.md": "2df13875c347c438dbc9a79818be15e004702020d7977545c25ec5f8f4ffe2be",
-    "README.md": "2df13875c347c438dbc9a79818be15e004702020d7977545c25ec5f8f4ffe2be",
+    "PARTICIPANTS.md": "2f9397ec309fb268f14a596f84394151834f9da449403cb3afb717e4906d9fb9",
+    "README.md": "2f9397ec309fb268f14a596f84394151834f9da449403cb3afb717e4906d9fb9",
     "exercise_1.py": "79f02d066f803353f246e1a2b8e904889bbfc1044afd72bba52aed55426fb297",
     "exercise_2.py": "7564f53c6f94bf6b5ef2a970a9b88d96a85d0112bd8f24b93385d8202316984b",
     "exercise_circuits.py": "9cdafa9a533957b8a35aca6703682e583fd409334f44903175d591cd23d13dfd",
