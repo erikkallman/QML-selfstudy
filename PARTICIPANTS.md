@@ -13,8 +13,13 @@
   the Lab. The exercises do not need changes to them, but you can read and
   change them.
 - `workshop.css`: the styles of the exercises and of `tutorials.py`.
-- `research_generation.py` and `participant_package.py`: files that
-  `tutorials.py` needs.
+- `research_memory.py` and `research_generation.py`: the code of the two
+  research chapters. `research_memory_figures.py`,
+  `research_generation_figures.py`, and `figure_style.py` draw their figures.
+  The chapters show parts of this code; you can read all of it.
+- `chapters/`: the text of the two research chapters, one Markdown file per
+  section or step, in reading order.
+- `participant_package.py`: a file that `tutorials.py` needs.
 - Keep all these files in the same folder.
 - `serve.py`: starts the tutorial in your browser. See "Open the tutorial".
 - `requirements.txt`: the package list for the tutorial and for the fallback

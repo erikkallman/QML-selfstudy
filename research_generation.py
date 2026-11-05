@@ -148,6 +148,13 @@ def local_event_mask(x):
     return mask
 
 
+def isolating_input(wire):
+    """The input with x_j=0 for the given wire, 1 on its neighbors, and 0 elsewhere."""
+    x = np.zeros(N_QUBITS, dtype=int)
+    x[list(NEIGHBORS[wire])] = 1
+    return x
+
+
 def fit_local(x, y):
     """Fit only observed local bit means. No target or probability oracle is used.
 
@@ -286,6 +293,8 @@ def self_check():
         np.testing.assert_allclose(means, np.sin(beta[j]) ** 2, atol=2e-14, rtol=0)
     uniform = conditional_probabilities(np.ones(N_QUBITS, dtype=int), beta)
     np.testing.assert_allclose(uniform, 1 / 64, atol=1e-14, rtol=0)
+    for j in WIRES:
+        assert local_event_mask(isolating_input(j)[None, :])[0, j]
 
     # Deterministic bit means exercise the inverse, including both endpoints.
     isolated_inputs = np.repeat(1 - np.eye(N_QUBITS, dtype=int), 4, axis=0)

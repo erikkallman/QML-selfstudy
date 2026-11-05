@@ -12,15 +12,21 @@ import time
 
 
 SOURCE = Path(__file__).resolve().parent
+# The research chapters import these modules; tutorials.py also loads its chapter text from chapters/.
+MODULES = [
+    "figure_style.py", "research_generation.py", "research_generation_figures.py",
+    "research_memory.py", "research_memory_figures.py",
+]
 
 
 def read_bundle(source, notebook):
-    names = [notebook, "workshop.css", "research_generation.py"]
+    names = [notebook, "workshop.css", *MODULES]
     if notebook == "tutorials.py":
         names.extend([
             "participant_package.py", "PARTICIPANTS.md", "requirements.txt",
             "verify_tutorials.py", "serve.py",
         ])
+        names.extend(sorted(path.relative_to(source).as_posix() for path in (source / "chapters").rglob("*.md")))
     if notebook == "workshop.py":
         names.append("layouts/workshop.slides.json")
     bundle = {name: (source / name).read_bytes() for name in names}

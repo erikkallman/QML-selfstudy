@@ -1,5 +1,7 @@
 """Check the actual tutorial functions, circuits, and research estimators."""
 import os
+import re
+from pathlib import Path
 os.environ.setdefault("MPLBACKEND", "Agg")
 
 from tutorials import app
@@ -25,7 +27,7 @@ assert any(tag == "summary" for tag,_ in parser.elements)
 assert any(tag == "marimo-tex" for tag,_ in parser.elements)
 assert any(attrs.get("class") == "audience-answer" for _,attrs in parser.elements)
 print("PASS: audience question uses a collapsed native disclosure with rendered math")
-beside = values["notes_beside"]("```text\nfirst line\nsecond line\n```", values["flow_picture"]("memory")).text
+beside = values["notes_beside"]("```text\nfirst line\nsecond line\n```", values["mem_fig"].schemes_picture()).text
 assert "first line\nsecond line" in beside and "marimo-mime-renderer" in beside
 print("PASS: notes beside a figure keep code-block line breaks")
 assert values["presentation_page"].value == "Start"
@@ -77,48 +79,28 @@ for count in range(1,5):
     assert spectrum[count+1:].max() < 1e-12
 print("PASS: parameter shift, classical baseline, quantum kernel, and encoding frequency bounds")
 
-sensor = values["gaussian_sensor"]
-for db in [0,5,8]:
-    mq,vq,mp,vp = sensor(.9+.1j,db)
-    np.testing.assert_allclose([mq,mp],np.sqrt(2)*np.array([.9,.1]),atol=1e-12)
-    np.testing.assert_allclose([vq,vp],10**(-db/10),atol=1e-12)
-figure = values["circuit_picture"](sensor,.9+.1j,5)
+mem, mem_fig, gen_fig = values["mem"], values["mem_fig"], values["gen_fig"]
+elapsed = mem.self_check()
+figure = values["circuit_picture"](mem.gaussian_sensor,.9+.1j,5)
 labels = [t.get_text() for a in figure.axes for t in a.texts]
 assert any("X" in label for label in labels) and any("P" in label for label in labels), labels
-sample = values["displacement_samples"]
-latent,observed,nu = sample(100000,5,seed=73)
-np.testing.assert_array_equal(sample(100000,5,seed=73)[1],observed)
-np.testing.assert_allclose([np.var((observed-latent).real),np.var((observed-latent).imag)], nu/2,rtol=.02)
-estimate,truth = values["characteristic_estimate"],values["characteristic_truth"]
-np.testing.assert_allclose(estimate(observed,0,nu),1,atol=1e-12)
-b=np.array([.3,.7,1.2])
-assert np.max(np.abs(estimate(observed,1j*b,nu)-truth(b))) < .015
-assert np.max(np.abs(estimate(latent,1j*b,0)-truth(b))) < .015
-for query in [.5,1,1.5]:
-    rms0=np.sqrt((np.exp(2*query**2)-abs(truth(query))**2)/2000)
-    rms5=np.sqrt((np.exp(2*nu*query**2)-abs(truth(query))**2)/2000)
-    assert rms5 < rms0
-print("PASS: Gaussian units, both Bell readouts, sampling law, Fourier estimator, and RMS comparison")
-
-# The noise figure uses closed-form variances in units X=(a+a^dagger)/2.
-# PennyLane's x is 2X, and its wire-0 reading is (x_p - x_m)/sqrt2, so its variance is 2 * Var(X_p - X_m).
-variances = values["quadrature_variances"]
-for db in [0, 5, 8]:
-    _, pennylane_variance, _, _ = sensor(0j, db)
-    np.testing.assert_allclose(2 * variances(db)["bell"], pennylane_variance, atol=1e-12)
-np.testing.assert_allclose(variances(0)["bell"], variances(0)["heterodyne"], atol=1e-12)
-canvas = FigureCanvasAgg(values["noise_picture"](5))
+canvas = FigureCanvasAgg(mem_fig.noise_picture(5))
 canvas.draw()
 assert np.asarray(canvas.buffer_rgba())[..., :3].std() > 5
-print("PASS: noise figure variances match the PennyLane circuit; 0 dB equals heterodyne")
+print(f"PASS: Gaussian units, both Bell readouts, sampling law, Fourier estimator, RMS comparison, "
+      f"and noise-figure variances ({elapsed:.2f}s)")
 
 result, elapsed = values["gen"].self_check()
 print(f"PASS: structured generator circuit, local estimator, held-out scores, and samples ({elapsed:.2f}s)")
 for name in ["exercise_one_page","exercise_two_page","photonic_page","generative_page"]:
     assert values[name].value == "Tutorial"
 from matplotlib.patches import FancyBboxPatch
-for kind in ["training","memory","timeline","setup","local","models"]:
-    fig = values["flow_picture"](kind)
+diagrams = {"training": lambda: values["flow_picture"]("training"),
+            "models": lambda: values["flow_picture"]("models"),
+            "schemes": mem_fig.schemes_picture, "timeline": mem_fig.timeline_picture,
+            "setup": mem_fig.setup_picture, "local": gen_fig.training_picture}
+for kind, draw in diagrams.items():
+    fig = draw()
     canvas = FigureCanvasAgg(fig)
     canvas.draw()
     assert np.asarray(canvas.buffer_rgba())[...,:3].std() > 5
@@ -134,4 +116,12 @@ for kind in ["training","memory","timeline","setup","local","models"]:
                 holder = min(holders, key=lambda b: b.width * b.height)
                 assert holder.x0 <= extent.x0 and extent.x1 <= holder.x1, (kind, label.get_text())
 print("PASS: diagram labels fit inside their boxes")
+
+# Every chapter file that tutorials.py loads exists (app.run() above would fail otherwise),
+# and every file in chapters/ is loaded, so no text is left behind unused.
+here = Path(__file__).resolve().parent
+loaded = set(re.findall(r'(?:prose|prose_step|question)\("([^"]+\.md)"', (here / "tutorials.py").read_text()))
+present = {str(path.relative_to(here / "chapters")) for path in (here / "chapters").rglob("*.md")}
+assert loaded == present, (sorted(present - loaded), sorted(loaded - present))
+print(f"PASS: all {len(present)} chapter files are loaded")
 print(f"All tutorial checks passed ({len(outputs)} computed cells).")

@@ -12,9 +12,13 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent
 INPUT_FILES = (
-    "tutorials.py", "research_generation.py", "workshop.css", "requirements.txt",
+    "tutorials.py", "workshop.css", "requirements.txt",
     "verify_tutorials.py", "serve.py", "participant_package.py", "PARTICIPANTS.md",
+    "figure_style.py", "research_generation.py", "research_generation_figures.py",
+    "research_memory.py", "research_memory_figures.py",
 )
+# tutorials.py loads the text of the research chapters from these files.
+CHAPTER_FOLDER = "chapters"
 EXERCISES = {
     "exercise_1.py": ("Circuit exercise", "exercise_one", "exercise_one_page", "circuit_functions"),
     "exercise_2.py": ("Training exercise", "exercise_two", "exercise_two_page", "training_functions"),
@@ -107,7 +111,7 @@ def check_encoding(mo, onp, quantum_model):
 The notebook already contains the data, the circuit, the loss function, the starting weights, and the plots.
 You change one assignment: the weight update in `fit_regression`.
 That function is in the code cell directly below these instructions.
-*Freezing* the weights means keeping them at their starting values during training.
+Freezing the weights means keeping them at their starting values during training.
 
 1. Click the Run button at the bottom right. The check cell, below the code cell, shows the training loss before the first update and after 100 updates.
 2. Predict the loss curve if the weights never change.
@@ -350,6 +354,8 @@ def support_module(source, module, function_names):
 def build_files(root=ROOT):
     root = Path(root)
     files = {name: (root / name).read_bytes() for name in INPUT_FILES}
+    for path in sorted((root / CHAPTER_FOLDER).rglob("*.md")):
+        files[path.relative_to(root).as_posix()] = path.read_bytes()
     files["README.md"] = files["PARTICIPANTS.md"]
     for name, content in files.items():
         if name.endswith(".py"):
@@ -389,6 +395,12 @@ if __name__ == "__main__":
     print(f"Wrote {destination.name} ({destination.stat().st_size:,} bytes)")
     directory = ROOT.parent / "participants"
     directory.mkdir(exist_ok=True)
-    for name, content in build_files().items():
+    files = build_files()
+    # Chapter files can be renamed or removed; drop the ones the build no longer contains.
+    for path in (directory / CHAPTER_FOLDER).rglob("*.md"):
+        if path.relative_to(directory).as_posix() not in files:
+            path.unlink()
+    for name, content in files.items():
+        (directory / name).parent.mkdir(parents=True, exist_ok=True)
         (directory / name).write_bytes(content)
     print(f"GitHub-ready files: {directory}")

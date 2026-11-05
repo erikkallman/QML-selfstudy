@@ -26,7 +26,7 @@ def task_instructions(mo):
     The notebook already contains the data, the circuit, the loss function, the starting weights, and the plots.
     You change one assignment: the weight update in `fit_regression`.
     That function is in the code cell directly below these instructions.
-    *Freezing* the weights means keeping them at their starting values during training.
+    Freezing the weights means keeping them at their starting values during training.
 
     1. Click the Run button at the bottom right. The check cell, below the code cell, shows the training loss before the first update and after 100 updates.
     2. Predict the loss curve if the weights never change.
