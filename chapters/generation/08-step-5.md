@@ -4,14 +4,6 @@ Now run the fitted circuit at input $x=000000$.
 All six qubits start in $\lvert+\rangle$, and all 7 CZ gates entangle their qubits, so the six output bits are correlated.
 In the study, this is the only input run on hardware, and the one the authors call hardest to simulate classically.
 
-Read the first Lab plot:
-
-- The black curve is the target circuit's probability for each of the 64 bitstrings.
-- The colored curve is the fitted circuit's probability. The gap between the two curves is the model error.
-- The dots are frequencies in a finite set of new samples. They scatter around the colored curve.
-  This scatter is sampling error.
-- In the second plot, each row is one new six-bit sample.
-
 Two scores measure the fit:
 
 - Total variation distance (TVD) is half the sum of the absolute differences between two distributions,
@@ -24,3 +16,5 @@ Two scores measure the fit:
 
 The study scores with linear XEB instead.
 At 816 shallow qubits, the distribution has $2^{816}$ entries, so TVD and exact NLL cannot be computed.
+
+The Lab tab shows the result, with guided experiments.

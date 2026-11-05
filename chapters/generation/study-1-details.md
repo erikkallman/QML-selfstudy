@@ -1,5 +1,3 @@
-### The study
-
 Huang et al., Google Quantum AI, arXiv preprint, September 2025:
 [full text](https://arxiv.org/html/2509.09033v1); the appendices cited below are in the
 [PDF](https://arxiv.org/pdf/2509.09033v1).
@@ -15,7 +13,7 @@ The definition covers both learning from data and generating new samples.
 #### Model
 
 The authors call their circuits instantaneously deep quantum neural networks (IDQNNs; Definition 16).
-An IDQNN has exactly the four layers listed above, so its depth is constant in the number of qubits.
+An IDQNN has exactly the four layers of "The idea" in the Tutorial tab, so its depth is constant in the number of qubits.
 The paper proves (Lemma 2) that sampling an IDQNN gives the same output distribution as running a deep circuit on fewer qubits.
 In that mapping, one direction of the grid is time.
 Each shallow qubit of the IDQNN corresponds to one physical qubit at one time step of the deep circuit.
@@ -78,22 +76,3 @@ the non-uniform polynomial hierarchy would collapse to a finite level.
 The polynomial hierarchy is a sequence of complexity classes that generalizes P and NP;
 its collapse is widely considered unlikely.
 Hardness for samples that are only approximately right needs further conjectures, which the paper cites but does not prove.
-
-### This chapter and the study
-
-| | The study | This chapter |
-|:---|:---|:---|
-| Size | 816 shallow qubits, run as a deep circuit on 68 physical qubits over 12 time steps | 6 qubits on a 2-by-3 grid, simulated directly |
-| Hardware | Superconducting processor, with noise | Noiseless PennyLane simulator |
-| Circuit | IDQNN (Definition 16): initial states from $x$, $R_Z$, CZ on the grid edges, $X$-basis measurement | The same four layers |
-| Input bit 1 | Initial state $\lvert0\rangle$; on hardware, a mid-circuit measurement and reset | Initial state $\lvert0\rangle$ |
-| Training data | Pairs from the same circuit family, with angles the authors chose | The same, with six angles that we chose |
-| Training inputs | One third all zeros, one third 40% ones, one third 80% ones | The same mixture |
-| Training rule | Eq. (S.2.1) | The same formula |
-| Training pairs | 200,000 per angle set | 2,000 to 20,000 (Lab slider) |
-| Score | Linear XEB against the ideal circuit | TVD and held-out NLL, computed exactly |
-| Classical models | XGBoost and transformers | Left out |
-| Classical simulation | Not expected to be hard at 816 shallow qubits; inferred hard at 34,304 | Easy: all 64 probabilities computed exactly |
-
-This chapter therefore demonstrates the training rule on a circuit with correlated output bits.
-It does not show a quantum advantage, and it compares with no classical generative model.

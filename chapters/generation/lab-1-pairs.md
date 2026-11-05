@@ -1,0 +1,3 @@
+Task 1. Set the training pairs to 2,000, then to 20,000. Predict: how do the number of isolating pairs per qubit, the largest angle error, and the TVD at input 000000 change? Which qubits have the largest errors?
+
+The isolating pairs per qubit rise from 92–168 to 927–1,523. The largest angle error falls from 0.055 to 0.016 radians, and the TVD at 000000 from 0.055 to 0.010. Each angle's standard error is about $1/(2\sqrt{n_j})$, where $n_j$ is that qubit's bar in the plot "Fitted angles and their training pairs". Qubits 1 and 4 have three neighbors, so fewer training pairs isolate them, and their errors are larger.

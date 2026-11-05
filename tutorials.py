@@ -642,7 +642,8 @@ def generation_case(
     _story = mo.vstack([
         mo.md("## Research case 2: train a quantum generative model from single-bit averages"),
         notes_beside(prose("generation/01-question-and-idea.md"), gen_fig.training_picture()),
-        lesson_notes(prose("generation/02-study.md")),
+        lesson_notes(prose("generation/02-study-brief.md")),
+        lesson_notes(prose("generation/02-chapter-and-study.md")),
         mo.accordion({"Terms used in this chapter": lesson_notes(prose("generation/03-terms.md"))}),
         prose_step("generation/04-step-1.md", source_of(gen.probability_circuit, gen.conditional_probabilities)),
         prose_step("generation/05-step-2.md", source_of(gen.shallow_layers)),
@@ -654,19 +655,15 @@ def generation_case(
         question("generation/06-step-3-question-2.md"),
         prose_step("generation/07-step-4.md", source_of(gen.fit_local)),
         prose_step("generation/08-step-5.md", source_of(gen.sample_outputs)),
-        question("generation/08-step-5-question-1.md"),
-        prose_step("generation/09-step-6.md", 'result = gen.run_demo(n_train=12000)\nprint(result["metrics"]["all_zero_tvd_initial"])\nprint(result["metrics"]["all_zero_tvd_learned"])\n# Training receives only the observed pairs:\nfit = gen.fit_local(result["x_train"], result["y_train"])'),
+        lesson_notes(prose("generation/09-closing.md")),
+    ])
+    _study = mo.vstack([
+        mo.md("## The study in detail"),
+        lesson_notes(prose("generation/study-1-details.md")),
     ])
     _lab = mo.vstack([
         mo.md("## Structured-generation lab"),
-        input_output([
-            training_pairs,
-            question("generation/10-lab-question-1.md"),
-            generation_shots,
-            question("generation/10-lab-question-2.md"),
-            selected_wire,generation_input,
-            question("generation/10-lab-question-3.md"),
-        ], mo.vstack([
+        input_output([training_pairs, generation_shots, selected_wire, generation_input], mo.vstack([
             mo.md("### New bitstrings from the fitted circuit"), _fig,
             mo.md(f"Input $x$ = `{''.join(str(int(bit)) for bit in _x)}`. "
                   f"TVD between the target and the fitted circuit at this input: {gen.total_variation(_target_p,_learned_p):.4f} (0 means identical)."),
@@ -676,8 +673,13 @@ def generation_case(
                   f"(target circuit: {_metrics['mixed_heldout_nll_oracle']:.4f}; uniform guess: {onp.log(64):.4f})."),
             mo.accordion({"Circuit for the selected input": circuit_picture(gen.probability_qnode, _x, _learned)}),
         ])),
+        lesson_notes(prose("generation/lab-0-intro.md")),
+        question("generation/lab-1-pairs.md"),
+        question("generation/lab-2-samples.md"),
+        question("generation/lab-3-isolate.md"),
+        question("generation/lab-4-all-one.md"),
     ])
-    generative_page = mo.ui.tabs({"Tutorial":_story,"Lab":_lab},value=generation_view(),on_change=set_generation_view)
+    generative_page = mo.ui.tabs({"Tutorial":_story,"Study":_study,"Lab":_lab},value=generation_view(),on_change=set_generation_view)
     return (generative_page,)
 
 

@@ -5,7 +5,8 @@ Pick the training pairs where $x_1=0$ and $x_0=x_2=x_4=1$.
 Qubit 1 then starts in $\lvert+\rangle$ and all its neighbors start in $\lvert0\rangle$.
 We say that this input isolates qubit 1.
 
-The neighbors remain in $\lvert0\rangle$ up to a phase >up to a phase? means what here?<, so every CZ gate on qubit 1 acts as the identity.
+The rotation $R_Z(2\beta_k)$ of each neighbor only multiplies $\lvert0\rangle$ by the phase factor $e^{-i\beta_k}$, which changes no probability.
+So the neighbors stay in $\lvert0\rangle$, and every CZ gate on qubit 1 acts as the identity.
 Qubit 1 is then acted on by three gates only: Hadamard, $R_Z(2\beta_1)$, Hadamard.
 Its output bit follows
 $$P(y_1=1)=\sin^2\beta_1.$$
